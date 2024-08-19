@@ -1,14 +1,15 @@
-import { createBrowserRouter } from "react-router-dom";
-import RouteEnum from "./enum";
-import PrivateRoutes from "./private-routes";
+import { createBrowserRouter } from 'react-router-dom';
+import RouteEnum from './enum';
+import PrivateRoutes from './private-routes';
+import Homepage from '../../modules/homepage';
 
 const router = createBrowserRouter([
   {
     path: RouteEnum.Home,
-    element: <div>Hello World</div>,
+    element: <Homepage />,
   },
   {
-    element: <PrivateRoutes />, 
+    element: <PrivateRoutes />,
     children: [], // register your private routes overhere
   },
 ]);

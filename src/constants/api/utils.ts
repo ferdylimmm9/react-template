@@ -12,7 +12,7 @@ export async function blobToBase64(blob: Blob): Promise<string> {
 }
 
 export function downloadContent(title: string, base64URL: string) {
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.download = title;
   link.href = base64URL;
   link.click();
