@@ -1,5 +1,4 @@
-export const TokenKey = "token";
-
+export const TokenKey = 'token';
 
 // this class for handle token
 export class Token {
