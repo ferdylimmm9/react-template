@@ -1,11 +1,14 @@
-export class ApiError {
-    message: string;
-    statusCode?: number;
-    errors?: { [key: string]: string };
-    /** Contains information about the original error */
-    original?: any;
-  }
-
 export class IdInput {
   id: string;
 }
+
+export type ApiResult<T = never> = [T] extends [never]
+  ? {
+      status: 'fail' | 'success';
+      message: string;
+    }
+  : {
+      status: 'fail' | 'success';
+      message: string;
+      data: T;
+    };

@@ -4,22 +4,31 @@ import {
   UseMutationOptions,
   UseMutationResult,
 } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
-export type FetchType<TInput, TResult, TOption> = [TInput] extends [unknown]
+export type FetchType<TInput, TResult, TOption> = [TInput] extends [never]
   ? (options?: TOption) => TResult
-  : (input: TInput, options: TOption) => TResult;
+  : (input: TInput, options?: TOption) => TResult;
 
-//modeling the error resutl
-export type TError = any;
+//modeling the error result
+export type TError = AxiosError<{ message: string; status: 'fail' }>;
 
-export type ApiQueryType<TResult, TInput = unknown> = FetchType<
+export type ApiQueryType<TResult, TInput = never> = FetchType<
   TInput,
   UseQueryResult<TResult, TError>,
-  UseQueryOptions<TResult, TError>
+  Partial<UseQueryOptions<TResult, TError>>
 >;
 
-export type ApiMutationType<TResult, TBodyInput, TInput = unknown> = FetchType<
+export type ApiMutationType<TResult, TBodyInput, TInput = never> = [
   TInput,
-  UseMutationResult<TResult, TError, TBodyInput>,
-  UseMutationOptions<TResult, TError, TBodyInput>
->;
+] extends [never]
+  ? FetchType<
+      never,
+      UseMutationResult<TResult, TError, TBodyInput>,
+      UseMutationOptions<TResult, TError, TBodyInput>
+    >
+  : FetchType<
+      TInput,
+      UseMutationResult<TResult, TError, TBodyInput>,
+      UseMutationOptions<TResult, TError, TBodyInput>
+    >;
